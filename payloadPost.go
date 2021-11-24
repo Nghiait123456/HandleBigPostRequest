@@ -1,6 +1,7 @@
 package main
 
 import (
+	"sync"
 	"time"
 )
 
@@ -8,7 +9,9 @@ type Payload struct {
 	test string
 }
 
-var dataSaveDb = DataSaveDb{[]OneDataSaveDB{}, 10000}
+var muxtex = sync.Mutex{}
+
+var dataSaveDb = DataSaveDb{[]OneDataSaveDB{}, 10000, muxtex}
 
 func (p *Payload) Handle() bool {
 	// fake request call other api verify
@@ -29,8 +32,6 @@ func (p *Payload) Handle() bool {
 		},
 	}
 
-	//dataSaveDb.data = append(dataSaveDb.data, data)
-	//fmt.Print("dataSave", dataSaveDb.data, "len", len(dataSaveDb.data))
 	dataSaveDb.addpendDataSaveDb(data)
 	return true
 }
