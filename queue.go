@@ -13,7 +13,7 @@ type PoolJob struct {
 	MaxWorker int
 }
 
-func (p PoolJob) InitQueue() {
+func (p PoolJob) initQueue() {
 	for i := 0; i < p.MaxWorker; i++ {
 		p.StartOneWorker()
 	}
@@ -30,4 +30,8 @@ func (p PoolJob) StartOneWorker() {
 			log.Println("have data, end handle job")
 		}
 	}()
+}
+
+func (p PoolJob) PushJobToQueue(job Job) {
+	p.Pool <- job
 }

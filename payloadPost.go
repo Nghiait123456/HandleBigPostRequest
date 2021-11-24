@@ -1,11 +1,8 @@
 package main
 
 import (
-	"log"
 	"time"
 )
-
-const MAX_QUEUE = 1000
 
 type Payload struct {
 	test string
@@ -14,7 +11,7 @@ type Payload struct {
 var dataSaveDb = DataSaveDb{[]OneDataSaveDB{}, 10000}
 
 func (p *Payload) Handle() bool {
-	// fake request post to s3
+	// fake request call other api verify
 	for i := 0; i < 1000; i++ {
 
 	}
@@ -34,24 +31,6 @@ func (p *Payload) Handle() bool {
 
 	//dataSaveDb.data = append(dataSaveDb.data, data)
 	//fmt.Print("dataSave", dataSaveDb.data, "len", len(dataSaveDb.data))
-	dataSaveDb.addpendDataSaveDb(data, &dataSaveDb)
+	dataSaveDb.addpendDataSaveDb(data)
 	return true
-}
-
-func handleJob(p *Payload) bool {
-	go p.Handle()
-	return true
-}
-
-var Queue chan Payload
-
-func initQueue() {
-	Queue = make(chan Payload, MAX_QUEUE)
-}
-
-func payloadHandler(payload Payload) {
-	// push to queue
-	log.Println("start push to queue")
-	Queue <- payload
-	log.Println("end push to queue")
 }
