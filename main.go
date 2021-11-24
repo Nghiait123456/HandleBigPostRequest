@@ -1,20 +1,9 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"github.com/valyala/fasthttp"
 	"log"
-)
-
-var (
-	addr     = flag.String("addr", ":8080", "TCP address to listen to")
-	compress = flag.Bool("compress", false, "Whether to enable transparent response compression")
-)
-
-var (
-	strContentType     = []byte("Content-Type")
-	strApplicationJSON = []byte("application/json")
 )
 
 var poolWorkerUpload = PoolJob{make(chan Job, 200000), 1500}
