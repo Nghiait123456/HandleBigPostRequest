@@ -1,16 +1,24 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/valyala/fasthttp"
+	"log"
 )
 
 var poolWorkerUpload = PoolJob{make(chan Job, 100000), 15000}
 
+var (
+	addr = flag.String("addr", ":8091", "TCP address to listen to")
+)
+
 func main() {
 	poolWorkerUpload.initQueue()
 	fmt.Println("init queue succcess")
-	fasthttp.ListenAndServe(":8090", requestHandler)
+	if err := fasthttp.ListenAndServe(*addr, requestHandler); err != nil {
+		log.Fatalf("Error in ListenAndServe: %s", err)
+	}
 }
 
 func requestHandler(ctx *fasthttp.RequestCtx) {

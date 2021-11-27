@@ -1,8 +1,11 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
+	"log"
 	"sync"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type DataSaveDb struct {
@@ -25,6 +28,7 @@ type ModelPostSubmit struct {
 	updateAt         int64
 }
 
+
 func (d *DataSaveDb) addpendDataSaveDb(data OneDataSaveDB) bool {
 	// if multil routine use func, if sync
 	// use mutex
@@ -40,14 +44,41 @@ func (d *DataSaveDb) addpendDataSaveDb(data OneDataSaveDB) bool {
 
 	fmt.Println("save data to DB, lenData", len(d.data))
 
-	// reset buffer data
-	d.resetDataBufer()
 
 	fmt.Println("after reset data buffeer, lenData", len(d.data))
 	//todo  push to service save toDB
+	d.insertBathToDB()
+	// reset buffer data
+	d.resetDataBufer()
 	return true
 }
 
 func (d *DataSaveDb) resetDataBufer()  {
 	d.data = make([]OneDataSaveDB, 0)
+}
+
+func (d *DataSaveDb) insertBathToDB() {
+	db, err := sql.Open("mysql", "admin:1adphamnghia@tcp(127.0.0.1:3306)/handleBigPostRequest")
+	defer db.Close()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	sql := "INSERT INTO post_data(name_user, email_user, detail_survey_user, created_at, updated_at) VALUES ('nghiapm', 'nghiaIt@gmail.com', 'test survey', 1, 2)"
+	res, err := db.Exec(sql)
+
+	if err != nil {
+		fmt.Println("insert to DB error")
+		panic(err.Error())
+	}
+
+	lastId, err := res.LastInsertId()
+
+	if err != nil {
+		fmt.Println("get  last inserted row error")
+		log.Fatal(err)
+	}
+
+	fmt.Printf("The last inserted row id: %d\n", lastId)
 }
