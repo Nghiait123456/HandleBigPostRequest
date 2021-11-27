@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"github.com/valyala/fasthttp"
-	"log"
 )
 
-var poolWorkerUpload = PoolJob{make(chan Job, 200000), 1500}
+var poolWorkerUpload = PoolJob{make(chan Job, 100000), 15000}
 
 func main() {
 	poolWorkerUpload.initQueue()
+	fmt.Println("init queue succcess")
 	fasthttp.ListenAndServe(":8090", requestHandler)
 }
 
@@ -27,9 +27,9 @@ func uploadHanlde(ctx *fasthttp.RequestCtx) {
 	jobData := Job{Payload{"test"}}
 
 	// Push the work onto the queue.
-	log.Println("start push to queue")
+	//log.Println("start push to queue")
 	poolWorkerUpload.PushJobToQueue(jobData)
-	log.Println("end  push to queue")
+	//log.Println("end  push to queue")
 
 	//response
 	ctx.SetStatusCode(201)
