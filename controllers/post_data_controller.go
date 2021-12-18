@@ -3,6 +3,8 @@ package controllers
 import (
 	"fmt"
 	"github.com/valyala/fasthttp"
+	"handle-big-post-request/queue"
+	"handle-big-post-request/queue/payload"
 	"handle-big-post-request/validate"
 )
 
@@ -14,7 +16,7 @@ type PostDataController struct {
 	Ctx *fasthttp.RequestCtx
 }
 
-func (controller *PostDataController) Create() {
+func (controller *PostDataController) Create(poolJob queue.PoolJob) {
 	// get data request
 	dataRequest, ok := controller.Ctx.MultipartForm()
 	if ok != nil {
@@ -42,14 +44,14 @@ func (controller *PostDataController) Create() {
 		responseError(controller.Ctx, 400, "validate error")
 	}
 
-	//// push to queue
-	//// create job data
-	//jobData := Job{Payload{"test"}}
-	//
-	//// Push the work onto the queue.
-	////log.Println("start push to queue")
-	//poolWorkerUpload.PushJobToQueue(jobData)
-	////log.Println("end  push to queue")
+	// push to queue
+	// create job data
+	//jobData := queue.Job{payload.Payload{"test"}}
+
+	// Push the work onto the queue.
+	//log.Println("start push to queue")
+	poolJob.PushDataToQueue(payload.Payload{"test"})
+	//log.Println("end  push to queue")
 
 	//response
 	controller.Ctx.SetStatusCode(201)

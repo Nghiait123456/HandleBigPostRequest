@@ -1,17 +1,18 @@
-package main
+package payload
 
 import (
+	"handle-big-post-request/models/rawQuery"
 	"sync"
 	"time"
 )
 
 type Payload struct {
-	test string
+	Test string
 }
 
 var muxtex = sync.Mutex{}
 
-var dataSaveDb = DataSaveDb{[]OneDataSaveDB{}, 10000, muxtex}
+var dataSaveDb = rawQuery.DataSaveDb{[]rawQuery.OneDataSaveDB{}, 10000, muxtex}
 
 func (p *Payload) Handle() bool {
 	// fake request call other api verify
@@ -21,8 +22,8 @@ func (p *Payload) Handle() bool {
 	time.Sleep(300 * time.Millisecond)
 
 	// build data :
-	data := OneDataSaveDB{
-		ModelPostSubmit{
+	data := rawQuery.OneDataSaveDB{
+		rawQuery.ModelPostSubmit{
 			1,
 			"nghiapm",
 			"minhnghia.pham.it@gmail.com",
@@ -32,6 +33,6 @@ func (p *Payload) Handle() bool {
 		},
 	}
 
-	dataSaveDb.addpendDataSaveDb(data)
+	dataSaveDb.AddpendDataSaveDb(data)
 	return true
 }

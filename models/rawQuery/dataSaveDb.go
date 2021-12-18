@@ -1,51 +1,49 @@
-package main
+package rawQuery
 
 import (
 	"database/sql"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"sync"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type DataSaveDb struct {
-	data    []OneDataSaveDB
+	Data []OneDataSaveDB
 	// calculation for Max placeHolder DB and Table Insert
-	maxSize int
-	mu       sync.Mutex
+	MaxSize int
+	Mu      sync.Mutex
 }
 
 type OneDataSaveDB struct {
-	oneData ModelPostSubmit
+	OneData ModelPostSubmit
 }
 
 type ModelPostSubmit struct {
-	id               int
-	nameUser         string
-	emailUser        string
-	detailSurveyUser string
-	createdAt        int64
-	updateAt         int64
+	Id               int
+	NameUser         string
+	EmailUser        string
+	DetailSurveyUser string
+	CreatedAt        int64
+	UpdateAt         int64
 }
 
-
-func (d *DataSaveDb) addpendDataSaveDb(data OneDataSaveDB) bool {
+func (d *DataSaveDb) AddpendDataSaveDb(data OneDataSaveDB) bool {
 	// if multil routine use func, if sync
 	// use mutex
 	// todo update use atomic ==> up performance
-	d.mu.Lock()
-	defer d.mu.Unlock()
+	d.Mu.Lock()
+	defer d.Mu.Unlock()
 	//append data
-	if len(d.data) < d.maxSize {
-		d.data = append(d.data, data)
-		//fmt.Println("dataSaveDB", d.data, "len", len(d.data), "maxSize", d.maxSize)
+	if len(d.Data) < d.MaxSize {
+		d.Data = append(d.Data, data)
+		fmt.Println("dataSaveDB", d.Data, "len", len(d.Data), "maxSize", d.MaxSize)
 		return true
 	}
 
-	fmt.Println("save data to DB, lenData", len(d.data))
+	fmt.Println("save data to DB, lenData", len(d.Data))
 
-
-	fmt.Println("after reset data buffeer, lenData", len(d.data))
+	fmt.Println("after reset data buffeer, lenData", len(d.Data))
 	//todo  push to service save toDB
 	d.insertBathToDB()
 	// reset buffer data
@@ -53,8 +51,8 @@ func (d *DataSaveDb) addpendDataSaveDb(data OneDataSaveDB) bool {
 	return true
 }
 
-func (d *DataSaveDb) resetDataBufer()  {
-	d.data = make([]OneDataSaveDB, 0)
+func (d *DataSaveDb) resetDataBufer() {
+	d.Data = make([]OneDataSaveDB, 0)
 }
 
 func (d *DataSaveDb) insertBathToDB() {
