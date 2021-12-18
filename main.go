@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/valyala/fasthttp"
+	"handle-big-post-request/controllers"
 	"log"
 )
 
@@ -23,7 +24,7 @@ func main() {
 
 func requestHandler(ctx *fasthttp.RequestCtx) {
 	switch string(ctx.Path()) {
-	case "/user/nghia":
+	case "/postFrom":
 		uploadHanlde(ctx)
 	default:
 		ctx.Error("not found", fasthttp.StatusNotFound)
@@ -31,15 +32,20 @@ func requestHandler(ctx *fasthttp.RequestCtx) {
 }
 
 func uploadHanlde(ctx *fasthttp.RequestCtx) {
-	// create job data
-	jobData := Job{Payload{"test"}}
+	//dataRequest, _ := ctx.MultipartForm()
+	//fmt.Println("post", dataRequest, dataRequest.Value["test"][0])
+	controller := controllers.PostDataController{ctx}
+	controller.Create()
 
-	// Push the work onto the queue.
-	//log.Println("start push to queue")
-	poolWorkerUpload.PushJobToQueue(jobData)
-	//log.Println("end  push to queue")
-
-	//response
+	//// create job data
+	//jobData := Job{Payload{"test"}}
+	//
+	//// Push the work onto the queue.
+	////log.Println("start push to queue")
+	//poolWorkerUpload.PushJobToQueue(jobData)
+	////log.Println("end  push to queue")
+	//
+	////response
 	ctx.SetStatusCode(201)
 	fmt.Fprintf(ctx, `{"Name":"Alice","Body":"Hello","Time":1294706395881547000}`)
 }
