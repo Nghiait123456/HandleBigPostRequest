@@ -21,37 +21,39 @@ func (controller *PostDataController) Create(poolJob queue.PoolJob) {
 	dataRequest, ok := controller.Ctx.MultipartForm()
 	if ok != nil {
 		fmt.Println("error param post")
-		responseError(controller.Ctx, 400, "wrong format")
+		jsonErr := JsonResponseError{400, "wrong format"}
+		rs := ResponseError{controller.Ctx, 400, jsonErr}
+		rs.ResponseError()
 	}
 
 	email, found := dataRequest.Value["email"]
 	if !found {
 		fmt.Println("error param post")
-		responseError(controller.Ctx, 400, "missing param email")
+		jsonErr := JsonResponseError{400, "missing param email"}
+		rs := ResponseError{controller.Ctx, 400, jsonErr}
+		rs.ResponseError()
 	}
 
 	name, found := dataRequest.Value["name"]
 	if !found {
 		fmt.Println("error param post")
-		responseError(controller.Ctx, 400, "missing param name")
+		jsonErr := JsonResponseError{400, "missing param name"}
+		rs := ResponseError{controller.Ctx, 400, jsonErr}
+		rs.ResponseError()
 	}
 
 	//validate
 	valid := validate.UserPostFormUpload{email[0], name[0]}
-	ok = valid.Validate()
-	if ok != nil {
-		fmt.Println("error param post")
-		responseError(controller.Ctx, 400, "validate error")
+	err := valid.Validate()
+	if err != nil {
+		fmt.Println("error param post", MessageFrErrorValidate(err))
+		jsonErr := JsonResponseError{400, MessageFrErrorValidate(err)}
+		rs := ResponseError{controller.Ctx, 400, jsonErr}
+		rs.ResponseError()
+		return
 	}
 
-	// push to queue
-	// create job data
-	//jobData := queue.Job{payload.Payload{"test"}}
-
-	// Push the work onto the queue.
-	//log.Println("start push to queue")
 	poolJob.PushDataToQueue(payload.Payload{"test"})
-	//log.Println("end  push to queue")
 
 	//response
 	controller.Ctx.SetStatusCode(201)

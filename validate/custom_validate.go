@@ -18,5 +18,3 @@ func ruleCustoms(v *validator.Validate, ruleNameCustoms string) error {
 		return errors.New("ruleNameCustoms not exist")
 	}
 }
-
-
