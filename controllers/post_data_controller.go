@@ -57,5 +57,5 @@ func (controller *PostDataController) Create(poolJob queue.PoolJob) {
 
 	//response
 	controller.Ctx.SetStatusCode(201)
-	fmt.Fprintf(controller.Ctx, `{"Name":"Alice","Body":"Hello","Time":1294706395881547000}`)
+	fmt.Fprintf(controller.Ctx, `{"success":true}`)
 }
