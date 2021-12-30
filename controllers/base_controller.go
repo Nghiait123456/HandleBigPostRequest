@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/valyala/fasthttp"
 	"gopkg.in/go-playground/validator.v9"
+	"log"
 )
 
 type ResponseError struct {
@@ -26,6 +27,7 @@ func (rs *ResponseError) ResponseError() {
 		return
 	}
 
+	rs.ctx.SetStatusCode(rs.code)
 	fmt.Fprintf(rs.ctx, string(bodyJson))
 }
 
@@ -41,4 +43,14 @@ func MessageFrErrorValidate(err error) string {
 	}
 
 	return errorDetail
+}
+
+func ResponseJson(ctx *fasthttp.RequestCtx, bodyJson interface{}, httpCode int) {
+	jsonRs, err := json.Marshal(bodyJson)
+	if err != nil {
+		log.Fatalln("Data input not json string")
+	}
+
+	ctx.SetStatusCode(httpCode)
+	fmt.Fprintf(ctx, string(jsonRs))
 }

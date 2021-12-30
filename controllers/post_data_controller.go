@@ -8,12 +8,15 @@ import (
 	"handle-big-post-request/validate"
 )
 
-// Take note: our UserHandler has a UserStore injected in!
-// Global data stores can be problematic long term.
 type PostDataController struct {
 	//PostData models.PostData
 	//Sessions validate.UserPostFormUpload
 	Ctx *fasthttp.RequestCtx
+}
+
+type ResponseSuccess struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
 }
 
 func (controller *PostDataController) Create(poolJob queue.PoolJob) {
@@ -55,7 +58,7 @@ func (controller *PostDataController) Create(poolJob queue.PoolJob) {
 
 	poolJob.PushDataToQueue(payload.Payload{"test"})
 
-	//response
-	controller.Ctx.SetStatusCode(201)
-	fmt.Fprintf(controller.Ctx, `{"success":true}`)
+	//response success
+	rsSuccess := ResponseSuccess{true, "success"}
+	ResponseJson(controller.Ctx, rsSuccess, 201)
 }
