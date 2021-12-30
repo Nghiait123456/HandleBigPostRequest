@@ -5,8 +5,9 @@ import (
 )
 
 type UserPostFormUpload struct {
-	Email string `json:"email" validate:"required,email,passStrong"`
-	Name  string `json:"name" validate:"required"`
+	Email  string `json:"email" validate:"required,email,passStrong"`
+	Name   string `json:"name" validate:"required"`
+	Detail string `json:"detail" validate:"required"`
 }
 
 func (user *UserPostFormUpload) Validate() error {

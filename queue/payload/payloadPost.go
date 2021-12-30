@@ -7,12 +7,14 @@ import (
 )
 
 type Payload struct {
-	Test string
+	Name   string
+	Email  string
+	Detail string
 }
 
 var muxtex = sync.Mutex{}
 
-var dataSaveDb = rawQuery.DataSaveDb{[]rawQuery.OneDataSaveDB{}, 10000, muxtex}
+var dataSaveDb = rawQuery.DataSaveDb{[]rawQuery.PostSubmit{}, 10000, muxtex}
 
 func (p *Payload) Handle() bool {
 	// fake request call other api verify
@@ -22,15 +24,12 @@ func (p *Payload) Handle() bool {
 	time.Sleep(300 * time.Millisecond)
 
 	// build data :
-	data := rawQuery.OneDataSaveDB{
-		rawQuery.ModelPostSubmit{
-			1,
-			"nghiapm",
-			"minhnghia.pham.it@gmail.com",
-			"test khao sat thong tin user",
-			time.Now().UTC().Unix(),
-			time.Now().UTC().Unix(),
-		},
+	data := rawQuery.PostSubmit{
+		p.Name,
+		p.Email,
+		p.Detail,
+		time.Now().UTC().Unix(),
+		time.Now().UTC().Unix(),
 	}
 
 	dataSaveDb.AddpendDataSaveDb(data)

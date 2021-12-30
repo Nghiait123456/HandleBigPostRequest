@@ -8,4 +8,6 @@ require (
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/valyala/fasthttp v1.31.0 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
+	gorm.io/driver/mysql v1.2.2 // indirect
+	gorm.io/gorm v1.22.4 // indirect
 )

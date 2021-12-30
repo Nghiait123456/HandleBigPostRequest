@@ -26,12 +26,8 @@ func (p *PoolJob) StartOneWorker() {
 	go func() {
 		for {
 			// get job from pool job
-			//log.Println("get data from pool")
-			//wait until have job in channel
 			job := <-p.Pool
-			//log.Println("have data, start handle job")
 			job.PayloadJob.Handle()
-			//log.Println("have data, end handle job")
 		}
 	}()
 }
