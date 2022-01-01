@@ -1,7 +1,8 @@
 package payload
 
 import (
-	"handle-big-post-request/models/rawQuery"
+	"handle-big-post-request/queue/handle"
+	"handle-big-post-request/repo"
 	"sync"
 	"time"
 )
@@ -14,7 +15,7 @@ type Payload struct {
 
 var muxtex = sync.Mutex{}
 
-var dataSaveDb = rawQuery.DataSaveDb{[]rawQuery.PostSubmit{}, 10000, muxtex}
+var dataSaveDb = handle.DataSaveDb{[]repo.PostSubmit{}, 10000, muxtex}
 
 func (p *Payload) Handle() bool {
 	// fake request call other api verify
@@ -24,7 +25,7 @@ func (p *Payload) Handle() bool {
 	time.Sleep(300 * time.Millisecond)
 
 	// build data :
-	data := rawQuery.PostSubmit{
+	data := repo.PostSubmit{
 		p.Name,
 		p.Email,
 		p.Detail,

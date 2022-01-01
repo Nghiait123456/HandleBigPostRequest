@@ -1,30 +1,28 @@
-package rawQuery
+package handle
 
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"log"
+	"handle-big-post-request/repo"
 	"sync"
 )
 
 type DataSaveDb struct {
-	Data []PostSubmit
+	Data []repo.PostSubmit
 	// calculation for Max placeHolder DB and Table Insert
 	MaxSize int
 	Mu      sync.Mutex
 }
 
-type PostSubmit struct {
-	NameUser         string
-	EmailUser        string
-	DetailSurveyUser string
-	CreatedAt        int64
-	UpdatedAt        int64
-}
+//type PostSubmit struct {
+//	NameUser         string
+//	EmailUser        string
+//	DetailSurveyUser string
+//	CreatedAt        int64
+//	UpdatedAt        int64
+//}
 
-func (d *DataSaveDb) AddpendDataSaveDb(data PostSubmit) bool {
+func (d *DataSaveDb) AddpendDataSaveDb(data repo.PostSubmit) bool {
 	// if multil routine use func, if sync ==> use mutex
 	// todo update use atomic ==> up performance
 	d.Mu.Lock()
@@ -46,17 +44,9 @@ func (d *DataSaveDb) AddpendDataSaveDb(data PostSubmit) bool {
 }
 
 func (d *DataSaveDb) resetDataBufer() {
-	d.Data = make([]PostSubmit, 0)
+	d.Data = make([]repo.PostSubmit, 0)
 }
 
 func (d *DataSaveDb) insertBathToDB() bool {
-	dsn := "admin:1adphamnghia@tcp(127.0.0.1:3306)/handleBigPostRequest?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Println(err)
-		return false
-	}
-
-	db.Create(&d.Data)
-	return true
+	return repo.InsertBatch(&d.Data)
 }

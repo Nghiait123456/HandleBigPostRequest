@@ -18,6 +18,5 @@ func (user *UserPostFormUpload) Validate() error {
 		return err
 	}
 
-	er := v.Struct(user)
-	return er
+	return v.Struct(user)
 }
