@@ -10,7 +10,7 @@ import (
 func connectToDBMysql(typeDB string) (db *gorm.DB, err error) {
 	switch typeDB {
 	case "mysql":
-		dsn := "admin:1adphamnghia@tcp(127.0.0.1:3306)/handleBigPostRequest?charset=utf8mb4&parseTime=True&loc=Local"
+		dsn := "admin:1adphamnghia@tcp(172.17.0.2:3306)/handleBigPostRequest?charset=utf8mb4&parseTime=True&loc=Local"
 		return gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	default:
 		log.Println("not support typeDB", typeDB)

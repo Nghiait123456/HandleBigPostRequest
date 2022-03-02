@@ -15,7 +15,7 @@ type Payload struct {
 
 var muxtex = sync.Mutex{}
 
-var dataSaveDb = handle.DataSaveDb{[]repo.PostSubmit{}, 10000, muxtex}
+var dataSaveDb = handle.DataSaveDb{[]repo.PostSubmit{}, 2, muxtex}
 
 func (p *Payload) Handle() bool {
 	// fake request call other api verify

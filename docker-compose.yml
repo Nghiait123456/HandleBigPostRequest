@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/golang-docker
+    depends_on:
+      - database
+    container_name: handleBigPostRequestNew
+    environment:
+      - 'DB_PORT=3306'
+      - 'DB_HOST=handleBigPostRequest'
+
+  database:
+    image: mysql:5.7.22
+    environment:
+      MYSQL_ROOT_PASSWORD: 1adphamnghia
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 1adphamnghia
+      MYSQL_DATABASE: handleBigPostRequest
+    container_name: handleBigPostRequest
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - 33060:3306
+    volumes:
+      - golang-docker-data:/var/lib/mysql
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - database
+    ports:
+      - 8081:80
+    environment:
+      - 'PMA_HOST=database'
+      - 'PMA_PORT=3306'
+    container_name: golang-docker-pma
+
+
+# persisted storage
+volumes:
+  golang-docker-data:

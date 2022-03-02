@@ -12,7 +12,7 @@ import (
 var poolWorkerUpload = queue.PoolJob{make(chan queue.Job, 100000), 15000}
 
 var (
-	addr = flag.String("addr", ":8091", "TCP address to listen to")
+	addr = flag.String("addr", ":8080", "TCP address to listen to")
 )
 
 func main() {
