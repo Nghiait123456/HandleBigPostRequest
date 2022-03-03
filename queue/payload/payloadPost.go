@@ -1,8 +1,9 @@
 package payload
 
 import (
+	"github.com/valyala/fasthttp"
+	"handle-big-post-request/models"
 	"handle-big-post-request/queue/handle"
-	"handle-big-post-request/repo"
 	"sync"
 	"time"
 )
@@ -15,17 +16,20 @@ type Payload struct {
 
 var muxtex = sync.Mutex{}
 
-var dataSaveDb = handle.DataSaveDb{[]repo.PostSubmit{}, 2, muxtex}
+var dataSaveDb = handle.DataSaveDb{
+	[]models.PostSubmit{},
+	10000,
+	muxtex,
+}
 
 func (p *Payload) Handle() bool {
-	// fake request call other api verify
-	for i := 0; i < 1000; i++ {
-
-	}
-	time.Sleep(300 * time.Millisecond)
+	//fake call api post Data
+	client := fasthttp.Client{}
+	var get []byte
+	client.GetTimeout(get, "https://www.cloudflare.com/", 150*time.Millisecond)
 
 	// build data :
-	data := repo.PostSubmit{
+	data := models.PostSubmit{
 		p.Name,
 		p.Email,
 		p.Detail,
@@ -33,6 +37,5 @@ func (p *Payload) Handle() bool {
 		time.Now().UTC().Unix(),
 	}
 
-	dataSaveDb.AddpendDataSaveDb(data)
-	return true
+	return dataSaveDb.AddpendDataSaveDb(data)
 }

@@ -1,7 +1,6 @@
 package queue
 
 import (
-	"fmt"
 	"handle-big-post-request/queue/payload"
 )
 
@@ -33,9 +32,7 @@ func (p *PoolJob) StartOneWorker() {
 }
 
 func (p *PoolJob) PushJobToQueue(job Job) {
-	fmt.Println("start Push job to Queue")
 	p.Pool <- job
-	fmt.Println("end Push job to Queue")
 }
 
 func (p *PoolJob) PushDataToQueue(payload payload.Payload) {

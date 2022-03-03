@@ -1,0 +1,8 @@
+# Database config
+database:
+  host: localhost
+  port: 3306
+  name: handleBigPostRequest
+  user: admin
+  pass: 1adphamnghia
+  type: mysql

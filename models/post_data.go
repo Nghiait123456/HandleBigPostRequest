@@ -7,3 +7,11 @@ type PostData struct {
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"updated_at"`
 }
+
+type PostSubmit struct {
+	NameUser         string
+	EmailUser        string
+	DetailSurveyUser string
+	CreatedAt        int64
+	UpdatedAt        int64
+}

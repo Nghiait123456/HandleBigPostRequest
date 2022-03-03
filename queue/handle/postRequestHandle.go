@@ -1,28 +1,25 @@
 package handle
 
 import (
+	"context"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"handle-big-post-request/repo"
+	"handle-big-post-request/config"
+	"handle-big-post-request/connect/database"
+	"handle-big-post-request/models"
+	"handle-big-post-request/repository"
 	"sync"
+	"time"
 )
 
 type DataSaveDb struct {
-	Data []repo.PostSubmit
+	Data []models.PostSubmit
 	// calculation for Max placeHolder DB and Table Insert
 	MaxSize int
 	Mu      sync.Mutex
 }
 
-//type PostSubmit struct {
-//	NameUser         string
-//	EmailUser        string
-//	DetailSurveyUser string
-//	CreatedAt        int64
-//	UpdatedAt        int64
-//}
-
-func (d *DataSaveDb) AddpendDataSaveDb(data repo.PostSubmit) bool {
+func (d *DataSaveDb) AddpendDataSaveDb(data models.PostSubmit) bool {
 	// if multil routine use func, if sync ==> use mutex
 	// todo update use atomic ==> up performance
 	d.Mu.Lock()
@@ -30,23 +27,30 @@ func (d *DataSaveDb) AddpendDataSaveDb(data repo.PostSubmit) bool {
 	//append data
 	if len(d.Data) < d.MaxSize {
 		d.Data = append(d.Data, data)
-		fmt.Println("dataSaveDB", d.Data, "len", len(d.Data), "maxSize", d.MaxSize)
 		return true
 	}
 
-	fmt.Println("save data to DB, lenData", len(d.Data))
-	fmt.Println("after reset data buffeer, lenData", len(d.Data))
 	//todo  push to service save toDB
-	d.insertBathToDB()
+	ok := d.insertBathToDB()
+	if ok != nil {
+		fmt.Println("insert Batch error")
+		return false
+	}
+
+	fmt.Println("insert Batch success")
 	// reset buffer data
 	d.resetDataBufer()
 	return true
 }
 
 func (d *DataSaveDb) resetDataBufer() {
-	d.Data = make([]repo.PostSubmit, 0)
+	d.Data = make([]models.PostSubmit, 0)
 }
 
-func (d *DataSaveDb) insertBathToDB() bool {
-	return repo.InsertBatch(&d.Data)
+func (d *DataSaveDb) insertBathToDB() error {
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	R := repository.NewPostDataRepository(database.GetConnect(config.AllConfig.Database.Type))
+	return R.BatchInsert(ctx, &d.Data)
 }
