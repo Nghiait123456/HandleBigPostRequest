@@ -31,11 +31,12 @@ func (d *DataSaveDb) AddpendDataSaveDb(data models.PostSubmit) bool {
 	}
 
 	//todo  push to service save toDB
-	ok := d.insertBathToDB()
-	if ok != nil {
-		fmt.Println("insert Batch error")
-		return false
-	}
+	//todo cmt for test aws without DB
+	//ok := d.insertBathToDB()
+	//if ok != nil {
+	//	fmt.Println("insert Batch error")
+	//	return false
+	//}
 
 	fmt.Println("insert Batch success")
 	// reset buffer data
