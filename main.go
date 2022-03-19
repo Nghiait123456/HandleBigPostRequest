@@ -12,7 +12,7 @@ import (
 var poolWorkerUpload queue.PoolJob
 
 func init() {
-	poolWorkerUpload = queue.PoolJob{make(chan queue.Job, 200000), 80000}
+	poolWorkerUpload = queue.PoolJob{make(chan queue.Job, 400000), 150000}
 	config.Init("./config.yml")
 	// todo cmt for test on EC2
 	//database.Init()
