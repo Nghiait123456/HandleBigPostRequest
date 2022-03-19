@@ -32,5 +32,5 @@ func main() {
 
 	handle.ResignRoutePostData(&postDataHandle)
 
-	app.Listen(":8080")
+	app.Listen(":80")
 }
