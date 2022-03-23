@@ -6,3 +6,11 @@ database:
   user: admin
   pass: 1adphamnghia
   type: mysql
+
+
+logs:
+  LogGlobal: true
+  PrintGlobal: true
+  UseLogGlobalMode: true
+
+

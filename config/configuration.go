@@ -10,6 +10,7 @@ var AllConfig *Configuration
 // Configuration struct
 type Configuration struct {
 	Database DatabaseConfiguration
+	Logs     Logs
 }
 
 // DatabaseConfiguration struct
@@ -20,6 +21,13 @@ type DatabaseConfiguration struct {
 	Host     string `mapstructure:"host"`
 	Port     string `mapstructure:"port"`
 	Type     string `mapstructure:"type"`
+}
+
+// DatabaseConfiguration struct
+type Logs struct {
+	IsLogGlobal        bool `mapstructure:"LogGlobal"`
+	IsPrintGlobal      bool `mapstructure:"PrintGlobal"`
+	IsUseLogGlobalMode bool `mapstructure:"UseLogGlobalMode"`
 }
 
 // Init func initialize configuration
