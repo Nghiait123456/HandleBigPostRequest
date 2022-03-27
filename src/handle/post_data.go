@@ -2,8 +2,8 @@ package handle
 
 import (
 	"github.com/kataras/iris/v12"
-	"handle-big-post-request/controllers"
-	"handle-big-post-request/queue"
+	"handle-big-post-request/src/controllers"
+	"handle-big-post-request/src/queue"
 )
 
 type PostData struct {

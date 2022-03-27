@@ -1,4 +1,4 @@
-RERUN=`which reflex1`
+RERUN=`which reflex`
 if [[ "$RERUN" == "" ]]; then
     echo "install reflex"
     go get -u github.com/cespare/reflex

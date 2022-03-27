@@ -1,7 +1,7 @@
 package queue
 
 import (
-	"handle-big-post-request/queue/payload"
+	"handle-big-post-request/src/queue/payload"
 )
 
 // Job represents the job to be run

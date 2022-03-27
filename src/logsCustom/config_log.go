@@ -6,7 +6,7 @@ import (
 )
 
 func todayFilename() string {
-	today := "log-file/" + time.Now().Format("Jan 02 2006")
+	today := "src/log-file/" + time.Now().Format("Jan 02 2006")
 	return today + ".txt"
 }
 

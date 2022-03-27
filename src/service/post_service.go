@@ -2,10 +2,10 @@ package service
 
 import (
 	"context"
-	"handle-big-post-request/models"
-	"handle-big-post-request/queue"
-	"handle-big-post-request/queue/payload"
-	"handle-big-post-request/repository"
+	"handle-big-post-request/src/models"
+	"handle-big-post-request/src/queue"
+	"handle-big-post-request/src/queue/payload"
+	"handle-big-post-request/src/repository"
 )
 
 type postService struct {
@@ -16,7 +16,7 @@ func NewPostService(dataRepository repository.PostDataRepository) PostDataServic
 	return &postService{dataRepository}
 }
 
-func (s *postService) BatchInsert(ctx context.Context, postData *[]models.PostData) error {
+func (s *postService) BatchInsert(ctx context.Context, postData *[]models.PostSubmit) error {
 	return s.postDataRepo.BatchInsert(ctx, postData)
 }
 

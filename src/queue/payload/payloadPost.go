@@ -2,8 +2,8 @@ package payload
 
 import (
 	"github.com/valyala/fasthttp"
-	"handle-big-post-request/models"
-	"handle-big-post-request/queue/handle"
+	"handle-big-post-request/src/models"
+	"handle-big-post-request/src/queue/handle"
 	"sync"
 	"time"
 )

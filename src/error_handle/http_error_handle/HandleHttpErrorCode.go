@@ -2,7 +2,7 @@ package http_error_handle
 
 import (
 	"github.com/kataras/iris/v12"
-	"handle-big-post-request/config"
+	"handle-big-post-request/src/config"
 )
 
 type HandleHttp struct {

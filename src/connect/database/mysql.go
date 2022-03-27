@@ -5,7 +5,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"handle-big-post-request/config"
+	"handle-big-post-request/src/config"
 	"log"
 	"os"
 	"time"

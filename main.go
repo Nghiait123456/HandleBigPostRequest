@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"github.com/kataras/iris/v12"
-	"handle-big-post-request/config"
-	"handle-big-post-request/controllers"
-	"handle-big-post-request/error_handle/http_error_handle"
-	"handle-big-post-request/handle"
-	"handle-big-post-request/logsCustom"
-	"handle-big-post-request/queue"
+	"handle-big-post-request/src/config"
+	"handle-big-post-request/src/controllers"
+	"handle-big-post-request/src/error_handle/http_error_handle"
+	"handle-big-post-request/src/handle"
+	"handle-big-post-request/src/logsCustom"
+	"handle-big-post-request/src/queue"
 	"io"
 	"os"
 )

@@ -2,7 +2,7 @@ package http_error_handle
 
 import (
 	"github.com/kataras/iris/v12"
-	"handle-big-post-request/helper"
+	"handle-big-post-request/src/helper"
 )
 
 var LIST_STATUS_OKIE = []int{iris.StatusOK, iris.StatusCreated, iris.StatusAccepted}

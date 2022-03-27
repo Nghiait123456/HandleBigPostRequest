@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"handle-big-post-request/models"
+	"handle-big-post-request/src/models"
 )
 
 type PostDataRepository interface {

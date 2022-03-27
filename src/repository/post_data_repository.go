@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"gorm.io/gorm"
-	"handle-big-post-request/models"
+	"handle-big-post-request/src/models"
 )
 
 type postDataRepository struct {

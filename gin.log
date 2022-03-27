@@ -1,2 +1,0 @@
-[GIN-debug] GET    /upload                   --> main.main.func1 (3 handlers)
-[GIN-debug] Listening and serving HTTP on :8081
