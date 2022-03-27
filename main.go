@@ -5,6 +5,7 @@ import (
 	"github.com/kataras/iris/v12"
 	"handle-big-post-request/config"
 	"handle-big-post-request/controllers"
+	"handle-big-post-request/error_handle/http_error_handle"
 	"handle-big-post-request/handle"
 	"handle-big-post-request/logsCustom"
 	"handle-big-post-request/queue"
@@ -41,6 +42,16 @@ func main() {
 	app.Logger().SetOutput(io.MultiWriter(f, os.Stdout))
 	app.Logger().SetOutput(f)
 	app.Logger().SetLevel("debug")
+
+	/**
+	Handle http error code
+	*/
+	//
+
+	httpErrHd := http_error_handle.NewHandleHttpError(app)
+	app.OnAnyErrorCode(httpErrHd.ResignHandleHttpError)
+
+	// to register a handler for all error codes:
 
 	/**
 	Init config

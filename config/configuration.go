@@ -11,6 +11,7 @@ var AllConfig *Configuration
 type Configuration struct {
 	Database DatabaseConfiguration
 	Logs     Logs
+	Mode     Mode
 }
 
 // DatabaseConfiguration struct
@@ -28,6 +29,11 @@ type Logs struct {
 	IsLogGlobal        bool `mapstructure:"LogGlobal"`
 	IsPrintGlobal      bool `mapstructure:"PrintGlobal"`
 	IsUseLogGlobalMode bool `mapstructure:"UseLogGlobalMode"`
+}
+
+// DatabaseConfiguration struct
+type Mode struct {
+	ModeRun string `mapstructure:"ModeRun"`
 }
 
 // Init func initialize configuration
@@ -50,5 +56,9 @@ func Init(configPath string) {
 }
 
 func GetAllConfig() *Configuration {
+	if AllConfig == nil {
+		panic("Please Init config before run app")
+	}
+
 	return AllConfig
 }
