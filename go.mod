@@ -4,6 +4,9 @@ go 1.16
 
 require (
 	github.com/ajg/form v1.5.1 // indirect
+	github.com/cespare/reflex v0.3.1 // indirect
+	github.com/creack/pty v1.1.17 // indirect
+	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/google/go-querystring v1.1.0 // indirect
@@ -25,7 +28,7 @@ require (
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
 	golang.org/x/net v0.0.0-20210813160813-60bc85c4be6d // indirect
-	golang.org/x/sys v0.0.0-20211210111614-af8b64212486 // indirect
+	golang.org/x/sys v0.0.0-20220325203850-36772127a21f // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0
