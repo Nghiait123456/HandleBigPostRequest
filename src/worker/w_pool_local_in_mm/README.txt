@@ -10,6 +10,8 @@ For example, tasks that use X Mb of memory may need different concurrency limits
 ===> in short, it is recommended to create a workerPool pool for each worker specificity.
 
 
+==========>>>>>>>  Imagine this tool same Observe Pattern + async(workerPool) + sync(with FIFO when get job) + nonBlockingCode ==> to happy
+
 Life circle:
  1) Init list poolWorker, startWorker, worker live parallel webServer
  2) Push job to poolJob from callBack Fc
