@@ -7,7 +7,7 @@ import (
 	"handle-big-post-request/src/controllers"
 	"handle-big-post-request/src/error_handle/http_error_handle"
 	"handle-big-post-request/src/handle"
-	"handle-big-post-request/src/logsCustom"
+	"handle-big-post-request/src/logs_custom"
 	"handle-big-post-request/src/queue"
 	"io"
 	"os"
@@ -26,7 +26,7 @@ func main() {
 	/**
 	Init log file
 	*/
-	f := logsCustom.NewLogFile()
+	f := logs_custom.NewLogFile("src/log_file/")
 	defer f.Close()
 
 	/**
@@ -66,7 +66,7 @@ func main() {
 	global logs
 	*/
 	GlobalLogsCf := config.AllConfig.Logs
-	GLogs := logsCustom.Global{GlobalLogsCf.IsLogGlobal, GlobalLogsCf.IsPrintGlobal, GlobalLogsCf.IsUseLogGlobalMode}
+	GLogs := logs_custom.Global{GlobalLogsCf.IsLogGlobal, GlobalLogsCf.IsPrintGlobal, GlobalLogsCf.IsUseLogGlobalMode}
 	GLogs.ResignGlobalLog(app)
 
 	/**

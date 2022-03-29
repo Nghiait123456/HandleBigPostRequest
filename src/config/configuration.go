@@ -12,6 +12,7 @@ type Configuration struct {
 	Database DatabaseConfiguration
 	Logs     Logs
 	Mode     Mode
+	Redis    RedisConfiguration
 }
 
 // DatabaseConfiguration struct
@@ -34,6 +35,13 @@ type Logs struct {
 // DatabaseConfiguration struct
 type Mode struct {
 	ModeRun string `mapstructure:"ModeRun"`
+}
+
+// RedisConfiguration struct
+type RedisConfiguration struct {
+	Host     string `mapstructure:"host"`
+	Port     string `mapstructure:"port"`
+	PassWork string `mapstructure:"pass"`
 }
 
 // Init func initialize configuration
