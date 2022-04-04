@@ -1,22 +1,30 @@
-package w_pool_local_in_mm
+package main
 
 import (
 	"fmt"
 	"github.com/gammazero/workerpool"
 	"github.com/kataras/iris/v12"
+	"handle-big-post-request/src/worker/w_pool_local_in_mm"
 )
 
-func main1() {
-	fmt.Println("start new worker pool")
-	wp := workerpool.New(2)
-	fmt.Println("start push job to pool")
-	//requests := []string{"alpha", "beta", "gamma", "delta", "epsilon"}
+var wp *workerpool.WorkerPool
 
+func init() {
+	w_pool_local_in_mm.ResignAllWorker()
+}
+
+func main() {
+	//fmt.Println("start new worker pool")
+	//wp = workerpool.New(2)
+	//fmt.Println("start push job to pool")
+	//requests := []string{"alpha", "beta", "gamma", "delta", "epsilon"}
+	//todo example call multil api and response
+	// tham khao Iris call api
 	// push job anysnc
 	go func() {
 		for i := 0; i < 1000; i++ {
 			r := "test"
-			wp.Submit(func() {
+			w_pool_local_in_mm.WorkerNormal().PushJobToPollWork(func() {
 				fmt.Println("Handling request:", r)
 			})
 		}
