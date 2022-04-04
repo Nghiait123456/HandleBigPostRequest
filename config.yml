@@ -12,9 +12,9 @@ mode:
   ModeRun: debug
 
 logs:
-  LogGlobal: true
-  PrintGlobal: true
-  UseLogGlobalMode: true
+  LogGlobal: false
+  PrintGlobal: false
+  UseLogGlobalMode: false
 
 redis:
   host: localhost

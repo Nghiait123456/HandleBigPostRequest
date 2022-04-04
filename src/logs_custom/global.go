@@ -16,13 +16,12 @@ func (g *Global) logFullRequest(ctx iris.Context) {
 		return
 	}
 
-	body, _ := ctx.GetBody()
 	if g.IsPrintGlobal == true {
-		fmt.Println("Request path: ", ctx.Path(), ", request Body: ", body)
+		fmt.Println("Request path: %s ", ctx.Path())
 	}
 
 	if g.IsPrintGlobal == true {
-		ctx.Application().Logger().Info("Request path: ", ctx.Path(), ", request Body: ", body)
+		ctx.Application().Logger().Info("Request path: %s \n", ctx.Path())
 	}
 }
 

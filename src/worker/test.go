@@ -13,7 +13,7 @@ func init() {
 	w_pool_local_in_mm.ResignAllWorker()
 }
 
-func main() {
+func main1() {
 	//fmt.Println("start new worker pool")
 	//wp = workerpool.New(2)
 	//fmt.Println("start push job to pool")
