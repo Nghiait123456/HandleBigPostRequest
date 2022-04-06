@@ -2,45 +2,48 @@ package controllers
 
 import (
 	"github.com/kataras/iris/v12"
+	"handle-big-post-request/src/logs_custom"
 	"handle-big-post-request/src/queue"
 	"handle-big-post-request/src/queue/payload"
+	"handle-big-post-request/src/validate"
 )
 
 type PostDataController struct {
 	PoolJob *queue.PoolJob
 }
 
-type ResponseSuccess struct {
-	Success bool   `json:"success"`
-	Message string `json:"message"`
-}
-
-func (c *PostDataController) Create(Ctx iris.Context) {
-	email := Ctx.PostValueDefault("email", "")
-	if "" == email {
-		Ctx.StatusCode(iris.StatusBadRequest)
-		Ctx.JSON(iris.Map{
+func (c *PostDataController) Create(ctx iris.Context) {
+	prefixFc := "fc Create: "
+	var formData validate.PostFormUpload
+	err := ctx.ReadJSON(&formData)
+	if err != nil {
+		logs_custom.Logger().Warn(c.PreFixLog(prefixFc) + " internal server error")
+		ctx.StatusCode(iris.StatusInternalServerError)
+		ctx.JSON(iris.Map{
 			"status":  "false",
-			"message": "email is require",
+			"message": "internal server error",
 		})
 		return
 	}
 
-	name := Ctx.PostValueDefault("name", "")
-	if "" == name {
-		Ctx.StatusCode(iris.StatusBadRequest)
-		Ctx.JSON(iris.Map{
+	errVld := formData.Validate()
+	if errVld != nil {
+		logs_custom.Logger().Warn(c.PreFixLog(prefixFc) + " missing param required")
+		ctx.StatusCode(iris.StatusBadRequest)
+		ctx.JSON(iris.Map{
 			"status":  "false",
-			"message": "name is require",
+			"message": "missing param required",
 		})
 		return
 	}
 
-	detail := Ctx.PostValueDefault("detail", "detail default")
-	c.PoolJob.PushDataToQueue(payload.Payload{name, email, detail})
-
-	Ctx.JSON(iris.Map{
+	c.PoolJob.PushDataToQueue(payload.Payload{formData.Name, formData.Email, formData.Detail})
+	ctx.JSON(iris.Map{
 		"status":  "success",
 		"message": "done",
 	})
+}
+
+func (c *PostDataController) PreFixLog(prefixFc string) string {
+	return "class PostDataController : " + prefixFc
 }

@@ -33,7 +33,7 @@ func main() {
 	Init worker pool
 	*/
 	poolWorkerUpload.InitQueue()
-	fmt.Println("init queue succcess")
+	fmt.Println("init queue success")
 
 	/**
 	Init, config web server
@@ -42,6 +42,9 @@ func main() {
 	app.Logger().SetOutput(io.MultiWriter(f, os.Stdout))
 	app.Logger().SetOutput(f)
 	app.Logger().SetLevel("debug")
+
+	//update logger
+	logs_custom.SetLogger(app.Logger())
 
 	/**
 	Handle http error code

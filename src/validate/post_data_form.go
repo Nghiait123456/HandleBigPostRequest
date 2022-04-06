@@ -1,19 +1,19 @@
 package validate
 
 import (
-	"gopkg.in/go-playground/validator.v9"
+	"github.com/go-playground/validator/v10"
 )
 
-type UserPostFormUpload struct {
-	Email  string `json:"email" validate:"required,email,passStrong"`
+type PostFormUpload struct {
+	Email  string `json:"email" validate:"required,email,lengthStrong"`
 	Name   string `json:"name" validate:"required"`
 	Detail string `json:"detail" validate:"required"`
 }
 
-func (user *UserPostFormUpload) Validate() error {
+func (user *PostFormUpload) Validate() error {
 	v := validator.New()
 	// customs validate
-	err := ruleCustoms(v, "passStrong")
+	err := ruleCustoms(v, "lengthStrong")
 	if err != nil {
 		return err
 	}

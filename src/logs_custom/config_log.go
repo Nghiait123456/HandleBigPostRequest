@@ -1,9 +1,12 @@
 package logs_custom
 
 import (
+	"github.com/kataras/golog"
 	"os"
 	"time"
 )
+
+var logger *golog.Logger
 
 func todayFilename(preFixLink string) string {
 	today := preFixLink + "Iris_" + time.Now().Format("2006_01_02")
@@ -19,4 +22,16 @@ func NewLogFile(preFixLink string) *os.File {
 	}
 
 	return f
+}
+
+func SetLogger(log *golog.Logger) {
+	logger = log
+}
+
+func Logger() *golog.Logger {
+	if logger == nil {
+		panic("please init logs before use")
+	}
+
+	return logger
 }

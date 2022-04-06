@@ -16,10 +16,6 @@ func ResignRoutePostData(h *PostData) {
 	booksAPI := h.App.Party("/uploadForm")
 	{
 		// POST: http://localhost:8080/uploadForm
-		booksAPI.Post("/", h.CreatePostDataControler)
+		booksAPI.Post("/", h.C.Create)
 	}
-}
-
-func (h *PostData) CreatePostDataControler(ctx iris.Context) {
-	h.C.Create(ctx)
 }
