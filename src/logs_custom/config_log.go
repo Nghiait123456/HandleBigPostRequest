@@ -6,8 +6,8 @@ import (
 )
 
 func todayFilename(preFixLink string) string {
-	today := preFixLink + time.Now().Format("Jan 02 2006")
-	return today + ".txt"
+	today := preFixLink + "Iris_" + time.Now().Format("2006_01_02")
+	return today + ".log"
 }
 
 func NewLogFile(preFixLink string) *os.File {
