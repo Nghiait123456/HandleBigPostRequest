@@ -17,11 +17,11 @@ func (c *PostDataController) Create(ctx iris.Context) {
 	var formData validate.PostFormUpload
 	err := ctx.ReadJSON(&formData)
 	if err != nil {
-		logs_custom.Logger().Warn(c.PreFixLog(prefixFc) + " internal server error")
+		logs_custom.Logger().Warn(c.PreFixLog(prefixFc) + " please use content type application/json")
 		ctx.StatusCode(iris.StatusInternalServerError)
 		ctx.JSON(iris.Map{
 			"status":  "false",
-			"message": "internal server error",
+			"message": "please use content type application/json",
 		})
 		return
 	}
