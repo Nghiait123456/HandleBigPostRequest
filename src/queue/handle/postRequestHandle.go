@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/valyala/fasthttp"
 	"handle-big-post-request/src/config"
 	"handle-big-post-request/src/connect/database"
 	"handle-big-post-request/src/models"
@@ -30,13 +31,20 @@ func (d *DataSaveDb) AddpendDataSaveDb(data models.PostSubmit) bool {
 		return true
 	}
 
-	//todo  push to service save toDB
-	//todo cmt for test aws without DB
+	// push data to DB or push to another service to save
+	// anything ==> target batch Save Data, batch insert but not save every-Pne
+
+	// if user save DB
 	//ok := d.insertBathToDB()
 	//if ok != nil {
 	//	fmt.Println("insert Batch error")
 	//	return false
 	//}
+
+	//fake call api post Data to service save data
+	client := fasthttp.Client{}
+	var get []byte
+	client.GetTimeout(get, "https://www.cloudflare.com/", 150*time.Millisecond)
 
 	fmt.Println("insert Batch success")
 	// reset buffer data

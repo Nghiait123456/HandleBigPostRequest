@@ -1,7 +1,6 @@
 package payload
 
 import (
-	"github.com/valyala/fasthttp"
 	"handle-big-post-request/src/models"
 	"handle-big-post-request/src/queue/handle"
 	"sync"
@@ -23,11 +22,6 @@ var dataSaveDb = handle.DataSaveDb{
 }
 
 func (p *Payload) Handle() bool {
-	//fake call api post Data
-	client := fasthttp.Client{}
-	var get []byte
-	client.GetTimeout(get, "https://www.cloudflare.com/", 150*time.Millisecond)
-
 	// build data :
 	data := models.PostSubmit{
 		p.Name,
