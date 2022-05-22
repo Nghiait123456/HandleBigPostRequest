@@ -88,6 +88,10 @@ func main() {
 
 	handle.ResignRoutePostData(&postDataHandle)
 
+	app.Get("/", func(ctx iris.Context) {
+		ctx.WriteString("homepage")
+	})
+
 	//health check
 	app.Get("/ping", func(ctx iris.Context) {
 		ctx.WriteString("pong")
